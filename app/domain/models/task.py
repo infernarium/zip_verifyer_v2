@@ -1,7 +1,7 @@
 from sqlalchemy import String, Enum
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import Mapped, mapped_column
-from app.domain.models.Base import Base
+from app.domain.models.base import Base
 from typing import Optional
 import enum
 import uuid
