@@ -1,10 +1,11 @@
+import uuid
 from pydantic import BaseModel
 from typing import Optional, Dict
 from app.domain.models.task import TaskStatusEnum
 
 
 class UploadResponseSchema(BaseModel):
-    task_id: str
+    task_id: uuid.UUID
 
 
 class TestResults(BaseModel):
@@ -14,6 +15,6 @@ class TestResults(BaseModel):
     vulnerabilities: Dict[str, int]
 
 
-class ReportAnswerSchema(BaseModel):
+class ReportResponseSchema(BaseModel):
     status: TaskStatusEnum
     results: Optional[TestResults] = None
