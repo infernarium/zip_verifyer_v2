@@ -7,6 +7,7 @@ requires-python = ">=3.12"
 dependencies = [
     "fastapi>=0.115.12",
     "minio>=7.2.15",
+    "pydantic-settings>=2.9.1",
     "python-multipart>=0.0.20",
     "ruff>=0.11.13",
     "sqlalchemy>=2.0.41",
