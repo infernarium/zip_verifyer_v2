@@ -33,6 +33,10 @@ class RedisSettings(BaseSettings):
     )
 
 
-minio_settings = MinioSettings()
-postgres_settings = PostgresSettings()
-redis_settings = RedisSettings()
+class ProjectSettings(BaseSettings):
+    minio_settings: MinioSettings = MinioSettings()
+    postgres_settings: PostgresSettings = PostgresSettings()
+    redis_settings: RedisSettings = RedisSettings()
+
+
+project_settings = ProjectSettings()

@@ -1,6 +1,7 @@
 import uuid
 from app.domain.schemas.task import TaskStatusEnum, TestResults
 from app.domain.repositories.task_repository import TaskRepository
+from app.domain.services.analytics_service import AnalyticsService
 from app.domain.services.storage_service import StorageService
 from fastapi import HTTPException
 
@@ -10,9 +11,11 @@ class UploadArchiveUseCase:
         self,
         task_repo: TaskRepository,
         storage_service: StorageService,
+        analysis_service: AnalyticsService,
     ):
         self.task_repo = task_repo
         self.storage_service = storage_service
+        self.analytics_service = analysis_service
 
     async def execute(self, file_data: bytes, filename: str) -> uuid.UUID:
         if not (filename.endswith(".zip")):
