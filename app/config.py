@@ -1,3 +1,4 @@
+# app\config.py
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -16,9 +17,10 @@ class PostgresSettings(BaseSettings):
     POSTGRES_DB: str = "zip_verifier"
     POSTGRES_USER: str = "zip_admin"
     POSTGRES_PASSWORD: str = "supersecurepassword"
-    DATABASE_URL: str = (
-        f"postgresql+asyncpg://{POSTGRES_USER}:{POSTGRES_PASSWORD}@localhost:5432/{POSTGRES_DB}"
-    )
+
+    @property
+    def DATABASE_URL(self) -> str:
+        return f"postgresql+asyncpg://{self.POSTGRES_USER}:{self.POSTGRES_PASSWORD}@localhost:5432/{self.POSTGRES_DB}"
 
     model_config = SettingsConfigDict(
         env_file=".env", case_sensitive=False, extra="ignore"
