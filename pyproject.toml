@@ -9,6 +9,7 @@ dependencies = [
     "asyncpg>=0.30.0",
     "fastapi>=0.115.12",
     "minio>=7.2.15",
+    "psycopg2>=2.9.10",
     "pydantic-settings>=2.9.1",
     "python-multipart>=0.0.20",
     "ruff>=0.11.13",
