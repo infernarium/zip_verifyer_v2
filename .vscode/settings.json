@@ -1,0 +1,14 @@
+{
+  "sqltools.connections": [
+    {
+      "previewLimit": 50,
+      "server": "localhost",
+      "port": 5432,
+      "driver": "PostgreSQL",
+      "name": "sad",
+      "database": "zip_verifier",
+      "username": "zip_admin",
+      "password": "supersecurepassword"
+    }
+  ]
+}
