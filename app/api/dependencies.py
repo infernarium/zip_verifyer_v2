@@ -41,7 +41,7 @@ def get_minio_client() -> Minio:
 def get_storage_service(
     minio: Annotated[Minio, Depends(get_minio_client)],
 ) -> StorageService:
-    return MinioStorageService(minio)
+    return MinioStorageService(minio, settings=project_settings.minio_settings)
 
 
 def get_task_repository(session: AsyncSession = Depends(get_db)) -> TaskRepository:
