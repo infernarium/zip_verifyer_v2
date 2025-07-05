@@ -1,9 +1,10 @@
+import hashlib
 import uuid
 from app.domain.schemas.task import TaskStatusEnum, TestResults
 from app.domain.repositories.task_repository import TaskRepository
 from app.domain.services.analytics_service import AnalyticsService
 from app.domain.services.storage_service import StorageService
-from fastapi import HTTPException
+from fastapi import HTTPException, UploadFile
 
 
 class UploadArchiveUseCase:
@@ -17,16 +18,16 @@ class UploadArchiveUseCase:
         self.storage_service = storage_service
         self.analytics_service = analysis_service
 
-    async def execute(self, file_data: bytes, filename: str) -> uuid.UUID:
+    async def execute(self, file: UploadFile, filename: str) -> uuid.UUID:
         if not (filename.endswith(".zip")):
             raise HTTPException(status_code=400, detail="Только ZIP-архивы разрешены")
 
-        file_hash = self._calculate_file_hash(file_data)
+        file_hash = self._calculate_file_hash(file)
 
         if await self.storage_service.file_exists(file_hash):
             raise HTTPException(status_code=409, detail="Файл уже загружен")
 
-        upload_result = await self.storage_service.upload_file(file_data, file_hash)
+        upload_result = await self.storage_service.upload_file(file, file_hash)
         if not upload_result:
             raise HTTPException(status_code=500, detail="Ошибка при загрузке файла")
 
@@ -42,5 +43,11 @@ class UploadArchiveUseCase:
 
         return task_id
 
-    def _calculate_file_hash(self, file_data: bytes) -> str:
-        return "file_hash"
+    def _calculate_file_hash(self, file: UploadFile) -> str:
+        """Вычисляет SHA-256 хеш файла"""
+        hasher = hashlib.sha256()
+        file.file.seek(0)
+        while chunk := file.file.read(4096):
+            hasher.update(chunk)
+        file.file.seek(0)
+        return hasher.hexdigest()
