@@ -5,7 +5,6 @@ from app.config import MinioSettings
 from app.domain.services.storage_service import StorageService
 
 
-# TODO: передавать настройки как зависимость
 class MinioStorageService(StorageService):
     def __init__(self, minio_client: Minio, settings: MinioSettings):
         self.settings = settings
