@@ -10,7 +10,7 @@ from sqlalchemy.ext.asyncio import async_engine_from_config
 from alembic import context
 
 from app.domain.models.base import Base
-from app.domain.models.task import TaskResult
+from app.domain.models.task import TaskResult  # noqa
 from app.config import project_settings
 
 
