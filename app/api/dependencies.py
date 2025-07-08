@@ -1,4 +1,4 @@
-from typing import Annotated, AsyncGenerator
+from typing import Annotated
 
 from fastapi import Depends
 
@@ -10,7 +10,6 @@ from app.domain.services.analytics_service import AnalyticsService
 from app.domain.services.storage_service import StorageService
 from app.infrastructure.repositories.task_repository_impl import TaskRepositoryImpl
 from app.infrastructure.services.minio_storage_service import MinioStorageService
-from sqlalchemy.ext.asyncio import AsyncSession
 from app.config import project_settings
 from app.infrastructure.services.sonarqube_stats_service import (
     SonarqubeAnalyticsService,
