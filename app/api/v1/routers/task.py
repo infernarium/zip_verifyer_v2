@@ -26,7 +26,6 @@ async def upload(
     storage_service: StorageServiceDependency,
     task_repo: TaskRepositoryDependency,
 ) -> UploadResponseSchema:
-    file_data = await file.read()
     return await UploadArchiveUseCase(
         task_repo, storage_service, analytics_service
-    ).execute(file_data=file_data, filename=file.filename)
+    ).execute(file)
