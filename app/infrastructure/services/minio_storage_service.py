@@ -26,10 +26,10 @@ class MinioStorageService(StorageService):
                 object_name=file_id,
                 data=file_stream,
                 length=len(file_data),
+                content_type="application/zip",
             )
         except S3Error as e:
-            print(f"ERROR: {e}")
-            exit(1)
+            raise e
 
         return True
 
@@ -37,7 +37,12 @@ class MinioStorageService(StorageService):
         try:
             self.client.stat_object(self.settings.MINIO_BUCKET_NAME, file_id)
             return True
-        except S3Error:
-            return False
+        except S3Error as e:
+            raise e
 
-    async def delete_file(self, file_hash: str) -> bool: ...
+    async def delete_file(self, file_id: str) -> bool:
+        try:
+            self.client.remove_object(self.settings.MINIO_BUCKET_NAME, file_id)
+            return True
+        except S3Error as e:
+            raise e
