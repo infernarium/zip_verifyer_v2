@@ -18,6 +18,7 @@ class TaskResult(Base):
     __tablename__ = "task_results"
 
     task_id: Mapped[uuid.UUID] = mapped_column(String, primary_key=True, index=True)
+    task_hash: Mapped[str] = mapped_column(String, nullable=False)
     status: Mapped[TaskStatusEnum] = mapped_column(
         Enum(TaskStatusEnum), default=TaskStatusEnum.PENDING, nullable=False
     )

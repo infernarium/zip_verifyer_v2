@@ -15,6 +15,11 @@ class TestResults(BaseModel):
     vulnerabilities: Dict[str, int]
 
 
+class TaskUpdateSchema(BaseModel):
+    status: Optional[TaskStatusEnum] = None
+    results: Optional[TestResults] = None
+
+
 class ReportResponseSchema(BaseModel):
     status: TaskStatusEnum
     results: Optional[TestResults] = None
