@@ -25,6 +25,7 @@ async_session_maker = async_sessionmaker(
 async def get_db() -> AsyncSession:
     async with async_session_maker() as session:
         yield session
+        session.close()
 
 
 def get_minio_client() -> Minio:
