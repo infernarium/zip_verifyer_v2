@@ -1,5 +1,5 @@
 import uuid
-from fastapi import UploadFile
+from fastapi import BackgroundTasks, UploadFile
 from fastapi.routing import APIRouter
 from app.api.dependencies import (
     AnalyticsServiceDependency,
@@ -25,7 +25,8 @@ async def upload(
     analytics_service: AnalyticsServiceDependency,
     storage_service: StorageServiceDependency,
     task_repo: TaskRepositoryDependency,
+    background_tasks: BackgroundTasks,
 ) -> UploadResponseSchema:
     return await UploadArchiveUseCase(
-        task_repo, storage_service, analytics_service
+        task_repo, storage_service, analytics_service, background_tasks
     ).execute(file)
