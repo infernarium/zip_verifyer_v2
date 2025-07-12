@@ -3,7 +3,11 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.domain.models.task import TaskResult
 from app.domain.repositories.task_repository import TaskRepository
-from app.domain.schemas.task import TaskUpdateSchema, UploadResponseSchema
+from app.domain.schemas.task import (
+    ReportResponseSchema,
+    TaskUpdateSchema,
+    UploadResponseSchema,
+)
 
 
 class TaskRepositoryImpl(TaskRepository):
@@ -36,3 +40,9 @@ class TaskRepositoryImpl(TaskRepository):
         await self.db.commit()
         await self.db.refresh(task)
         return task
+
+    async def get_task_by_id(self, task_id) -> ReportResponseSchema:
+        task = await self.db.get(TaskResult, task_id)
+        if not task:
+            raise ValueError(f"Задача с id {task_id} не найдена")
+        return ReportResponseSchema.model_validate(task)

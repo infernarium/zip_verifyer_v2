@@ -23,3 +23,6 @@ class TaskUpdateSchema(BaseModel):
 class ReportResponseSchema(BaseModel):
     status: TaskStatusEnum
     results: Optional[TestResults] = None
+
+    class Config:
+        from_attributes = True
